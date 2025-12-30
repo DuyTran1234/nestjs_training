@@ -1,12 +1,15 @@
-import { Body, Controller, Get, HttpCode, Param, Query } from "@nestjs/common";
-import { CreateUserRequestDto } from "../dto/request/create-user-dto.request";
-import { UserValidationPipe } from "../validation/user.validation";
+import { Body, Controller, Get, HttpCode, Param, Query, UsePipes } from "@nestjs/common";
+import { CreateUserRequestDto, CreateUserRequestDtoSchema } from "../dto/request/create-user-dto.request";
+import { ZodValidationPipe } from "src/common/pipe/validation.pipe";
 
 @Controller('user')
 export class UserController {
     @Get('get')
-    async getUser(@Body(new UserValidationPipe()) createUserRequestDto: CreateUserRequestDto): Promise<string> {
+    @UsePipes(new ZodValidationPipe(CreateUserRequestDtoSchema))
+    async getUser(@Body() createUserRequestDto: CreateUserRequestDto): Promise<string> {
         console.log(createUserRequestDto);
-        return "test get all user";
+        console.log(createUserRequestDto instanceof CreateUserRequestDto);
+        console.log(process.env.DB_USERNAME);
+        return "done!";
     }
 }
