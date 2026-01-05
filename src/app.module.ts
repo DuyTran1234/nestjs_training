@@ -5,7 +5,6 @@ import { UserModule } from './user/user.module';
 
 @Module({
     imports: [
-        UserModule,
         ConfigModule.forRoot({
             envFilePath: ['.env.development'],
             isGlobal: true,
@@ -17,9 +16,11 @@ import { UserModule } from './user/user.module';
             username: process.env.DB_USERNAME,
             password: process.env.DB_PWD,
             database: process.env.DB_NAME,
+            autoLoadEntities: true,
             entities: [],
-            synchronize: true,
+            synchronize: false,
         }),
+        UserModule,
     ],
     controllers: [],
     providers: [],

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import z from "zod/v3";
 
-const userSchema = {
+const userZodSchema = {
     username: z.string()
         .min(6, 'Tối thiểu 6 ký tự').max(30, 'Tối đa 30 ký tự')
         .regex(/^[a-z0-9_]+$/)
@@ -21,4 +21,4 @@ const userSchema = {
         }).transform((val: string) => new Date(val)),
 };
 
-export default userSchema;
+export default userZodSchema;
